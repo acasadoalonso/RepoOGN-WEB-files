@@ -2,6 +2,8 @@
 $dd = $_POST['dd'];
 $mm = $_POST['mm'];
 $yy = $_POST['yy'];
+$md = $_POST['md'];
+
 $Filename='DATA'.$yy.$mm.$dd.'.log';
 $cwd =getcwd();
 $rc=0;
@@ -22,7 +24,9 @@ else
 	}
 //echo getcwd();
 ob_start();
-passthru('/usr/bin/python2.7 '.$pgm.' -sa YES -n '.$Filename.' ', $rc);
+
+passthru('/usr/bin/python2.7 '.$pgm.' -sa YES -n '.$Filename.' -m '.$md, $rc);
+
 $output = ob_get_clean(); 
 echo nl2br($output);
 ?>
