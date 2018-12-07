@@ -10,5 +10,7 @@ ob_start();
 passthru('/usr/bin/python2.7  ./glive.py '.$regis, $rc);
 
 $output = ob_get_clean();
+
+echo 'Back='.$regis.'<br>';
 echo nl2br($output);
 ?>
