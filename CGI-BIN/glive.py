@@ -13,9 +13,9 @@ cgitb.enable()
 # This script generates all the IGC files that are live now and present the list to the user
 #
 
-execfilename="/nfs/OGN/src/processogn.py"
-tempdir     ="/nfs/OGN/DIRdata/tmp/"
-datapath    ="/nfs/OGN/DIRdata/"
+execfilename=config.PYsrc+"/processogn.py"
+tempdir     =config.DBpath+"/tmp/"
+datapath    =config.DBpath
 
 
 html1="""<TITLE>Get the flights</TITLE> <IMG src="../gif/ogn-logo-150x150.png" border=1 alt=[image]><H1>Today's flights for the selected registration are: </H1> <HR> <P> %s </P> </HR> """

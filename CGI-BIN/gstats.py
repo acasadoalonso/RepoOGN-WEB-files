@@ -6,9 +6,10 @@ import os
 import urllib2
 import sqlite3
 import os
+import config
 cgitb.enable()
 
-dbpath ="/nfs/OGN/DIRdata/"
+dbpath =config.DBpath
 html1="""<TITLE>Get the flights</TITLE> <IMG src="../gif/ogn-logo-150x150.png" border=1 alt=[image]><H1>Statistics of the OGN receiver stations:: </H1> <HR> <P> %s </P> </HR> """
 html2="""<center><table><tr><td><pre>"""
 html3="""</pre></td></tr></table></center>"""

@@ -65,7 +65,7 @@ if config.MySQL:
         conn=MySQLdb.connect(host=config.DBhost, user=config.DBuser, passwd=config.DBpasswd, db=config.DBname)
 else:
         import sqlite3
-        conn=sqlite3.connect(config.DBpath+config.SQLite3)
+        conn=sqlite3.connect(config.DBpath+config.DBSQLite3)
 
 curs=conn.cursor()
 curs2=conn.cursor()
