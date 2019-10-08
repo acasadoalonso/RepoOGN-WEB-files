@@ -1,5 +1,5 @@
 apt*
 DIR*
 .htaccess
-cgi-bin
 CGI-BIN/config.py
+__pycache__
