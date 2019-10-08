@@ -1,0 +1,5 @@
+apt*
+DIR*
+.htaccess
+*.pyc
+config.py

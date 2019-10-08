@@ -15,17 +15,17 @@ $YY=date('y');
 if ($dd == $DD and $mm == $MM and $YY == $yy)
 	{
 	chdir("/nfs/OGN/DIRdata/");
-	$pgm ="../src/analysisrelay.py";
+	$pgm ="../src/SARsrc/analysisrelay.py";
 	}
 else
 	{
 	chdir("/nfs/OGN/DIRdata/data/");
-	$pgm ="../../src/analysisrelay.py";
+	$pgm ="../../src/SARsrc/analysisrelay.py";
 	}
 //echo getcwd();
 ob_start();
 
-passthru('/usr/bin/python2.7 '.$pgm.' -sa YES -n '.$Filename.' -m '.$md, $rc);
+passthru('/usr/bin/python3 '.$pgm.' -sa YES -n '.$Filename.' -m '.$md, $rc);
 
 $output = ob_get_clean(); 
 echo nl2br($output);
