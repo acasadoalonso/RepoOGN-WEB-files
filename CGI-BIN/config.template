@@ -2,10 +2,18 @@ reposerver="repoogn.ddns.net"
 DBpath='/nfs/OGN/DIRdata/' 
 DBhost='ubuntu' 
 DBname='OGNDB' 
+<<<<<<< HEAD:CGI-BIN/config.template
 DBSQLite3='SAROGN.db' 
+=======
+DBSQLite3='OGN.db' 
+>>>>>>> b327be6f7782a4e8677b2b133fbec3c25ad19743:CGI-BIN/config.template
 DBuser='ogn' 
 DBpasswd='ogn' 
 DBuserread='ognread' 
 DBpasswdread='ognread' 
 MySQL=True
+<<<<<<< HEAD:CGI-BIN/config.template
 PYsrc='/nfs/OGN/src/SARsrc'
+=======
+PYsrc='/nfs/OGN/src'
+>>>>>>> b327be6f7782a4e8677b2b133fbec3c25ad19743:CGI-BIN/config.template
