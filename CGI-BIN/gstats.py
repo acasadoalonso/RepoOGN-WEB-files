@@ -37,13 +37,13 @@ else:
     cursD.execute('select idrec, descri from RECEIVERS where idrec = ? ', [rg])             # get all the receivers
 
 for row in cursD.fetchall():              # search all the rows
-    id = row[0]
+    id = row[0].rstrip()
     desc = row[1]
-    if (id == None or id == "NONE"):
+    if (id == None or id == "NONE" ):
         continue
-    j = urllib.request.urlopen(
-        'http://flarmrange.onglide.com/api/1/stats?station='+id+'&grouping=month')
-    j_obj = json.load(j)
+    j = urllib.request.urlopen('http://flarmrange.onglide.com/api/1/stats?station='+id+'&grouping=month')
+    js= j.read().decode('utf-8')
+    j_obj = json.loads(js)
     j = json.dumps(j_obj, indent=4)
     stats = j_obj["stats"]
 
