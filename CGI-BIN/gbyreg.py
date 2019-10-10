@@ -29,15 +29,14 @@ def scandir(dir, rpath, html4, curs, curs2):
                     alt = reg[1]
                     dst = reg[2]
                 #geolocator = Nominatim(timeout=5)
-                execmd = "select max(altitude) as maxa, latitude, longitude from OGNDATA where idflarm = '%s' and date = '%s' " % (
-                    id, dte)
+                execmd = "select max(altitude) as maxa, latitude, longitude from OGNDATA where idflarm = '%s' and date = '%s' " % (id, dte)
                 curs2.execute(execmd)
                 reg = curs2.fetchone()
                 if reg and reg != None:
                     malt = reg[0]
                     if malt == alt:
                         lati = reg[1]
-                        long = reg[2]
+                        longi = reg[2]
                         addr = ''
                         #loc = geolocator.reverse([lati,long])
                         # if loc.address != None:
@@ -45,12 +44,11 @@ def scandir(dir, rpath, html4, curs, curs2):
                         addr = ' '
                     else:
                         lati = 0.0
-                        long = 0.0
+                        longi = 0.0
                         addr = ''
             nlines += 1
             if cnt > 0:
-                details = (" ==> Count(%4d) MDist(%5.1f) MAlt(%6.1f) Lat(%7.4f) Long(%7.4f) %s " % (
-                    cnt, dst, alt, lati, int, addr))
+                details = (" ==> Count(%4d) MDist(%5.1f) MAlt(%6.1f) Lat(%7.4f) Long(%7.4f) %s " % (cnt, dst, alt, lati, longi, addr))
             else:
                 details = " "
             fn = html4 + rpath + '/' + f.lstrip()
