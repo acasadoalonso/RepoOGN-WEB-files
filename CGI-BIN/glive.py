@@ -31,7 +31,6 @@ if not regist:
     rr = ''
     print((html1 % 'Invalid  registration'))
 else:
-<<<<<<< HEAD
     rr = regist[0]                      # get the registration
     rg = rr.strip()                     # clean the whitespace
     rg = rg.upper()                     # translate to upper case
