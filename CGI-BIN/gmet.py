@@ -5,6 +5,9 @@ import sys
 import cgitb
 import urllib.request, urllib.error, urllib.parse
 
+import ssl
+ssl.match_hostname = lambda cert, hostname: True
+
 from xml.etree.ElementTree import parse, fromstring
 import sys
 import datetime

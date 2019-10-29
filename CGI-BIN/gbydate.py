@@ -99,8 +99,17 @@ else:
                 details = (" ==> Count(%4d) MDist(%5.1f) MAlt(%6.1f) Lat(%7.4f) Long(%7.4f) %s " % (cnt, dst, alt, lati, longi, addr))
             else:
                 details = " "
-            fn = html4 + 'Y' + yy + '/M' + mm + '/' + f.lstrip()
-            fname = ("FN:%-33s" % f)
+            if f[-3:] == '.gz':
+                 
+                 ff = '/nfs/OGN/DIRdata/fd/Y' + yy + '/M' + mm + '/' + f.lstrip()
+                 os.system('gunzip '+ff)
+                 fn = html4 + 'Y' + yy + '/M' + mm + '/' + f[0:-3].lstrip()
+            else:
+                 ff=''
+                 fn = html4 + 'Y' + yy + '/M' + mm + '/' + f.lstrip()
+ 
+            fname = ("FN:%-33s %s" % (f, ff))
+            fname = ("FN:%-33s " % f)
             print(fn, '">MAP</a>', "<a>", fname, details,  "</a>")
     if nlines == 0:
         print("No flights found")

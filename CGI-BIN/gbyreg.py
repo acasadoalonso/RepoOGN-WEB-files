@@ -51,8 +51,17 @@ def scandir(dir, rpath, html4, curs, curs2):
                 details = (" ==> Count(%4d) MDist(%5.1f) MAlt(%6.1f) Lat(%7.4f) Long(%7.4f) %s " % (cnt, dst, alt, lati, longi, addr))
             else:
                 details = " "
-            fn = html4 + rpath + '/' + f.lstrip()
-            fname = ("FN:%-33s" % f)
+            if f[-3:] == '.gz':
+                 
+                 ff = '/nfs/OGN/DIRdata/fd/' + rpath + '/' + f.lstrip()
+                 os.system('gunzip '+ff)
+                 fn = html4 + rpath + '/' + f[0:-3].lstrip()
+            else:
+                 ff=''
+                 fn = html4 + rpath + '/' + f.lstrip()
+
+            fname = ("FN:%-33s %s" % (f, ff))
+            fname = ("FN:%-33s " % f)
             print(fn, '">MAP</a>', "<a>", fname, details,  "</a>")
         elif (os.path.isdir(dir+'/'+f)):
             nlines += scandir(dir+'/'+f, rpath+'/'+f, html4, curs, curs2)

@@ -2,4 +2,5 @@ apt*
 DIR*
 .htaccess
 CGI-BIN/config.py
+CGI-BIN/old/*
 __pycache__
