@@ -2,4 +2,6 @@ apt*
 DIR*
 .htaccess
 CGI-BIN/config.py
+CGI-BIN/old/*
+calcelestial/
 __pycache__

@@ -5,19 +5,24 @@ import cgitb
 import sys
 import config
 from geopy.geocoders import Nominatim
+#
+# Get all the flight by date
+#
 if config.MySQL:
+
     import MySQLdb                  # the SQL data base routines^M
     conn = MySQLdb.connect(host=config.DBhost, user=config.DBuser,
                            passwd=config.DBpasswd, db=config.DBname)
 else:
     import sqlite3
     conn = sqlite3.connect(config.DBpath+config.DBSQLite3)
-curs = conn.cursor()
+curs  = conn.cursor()
 curs2 = conn.cursor()
 
 setcmd1 = "set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';"
 setcmd2 = "set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';"
 if config.MySQL:
+
     curs.execute(setcmd1)
     curs.execute(setcmd2)
 
@@ -46,18 +51,24 @@ else:
     dd = dt[0:2]
     mm = dt[2:4]
     yy = dt[4:6]
-    if int(dd) > 0 and int(dd) < 32 and int(mm) > 0 and int(mm) < 13 and int(yy) > 14 and int(yy) < 20:
+    dir = rootdir+'/Y'+yy+'/M'+mm
+    if int(dd) > 0 and int(dd) < 32 and int(mm) > 0 and int(mm) < 13 and int(yy) > 14 and int(yy) < 20  and os.path.isdir(dir):
         vd = ('Valid date: %s-%s-%s. </br>Select now the flight to display:' %
               (dd, mm, yy))
     else:
         vd = "Invalid date ..."
     print((html1 % vd))
     print(html2)
-    dir = rootdir+'/Y'+yy+'/M'+mm
-    ld = os.listdir(dir)
+    if os.path.isdir(dir):   
+        ld = os.listdir(dir)
+    else:
+        ld=''
     for f in ld:
         if f[0:2] == "FD" and f[2:4] == yy and f[4:6] == mm and f[6:8] == dd:
-            id = f[-13:-4]
+            if f[-3:] == '.gz':
+               id = f[-16:-7]
+            else:
+               id = f[-13:-4]
             dte = yy+mm+dd
             cnt = 0
             alt = 0.0
@@ -68,6 +79,7 @@ else:
             selcmd = "select count(*), max(altitude) as maxa, max(distance) as maxd from OGNDATA where idflarm = '%s' and date = '%s' " % (id, dte)
             curs.execute(selcmd)
             reg = curs.fetchone()
+            #print ( ">>>>", id , reg , selcmd)
             if reg and reg != None:
                 cnt = reg[0]
                 if cnt == None:
@@ -99,9 +111,19 @@ else:
                 details = (" ==> Count(%4d) MDist(%5.1f) MAlt(%6.1f) Lat(%7.4f) Long(%7.4f) %s " % (cnt, dst, alt, lati, longi, addr))
             else:
                 details = " "
-            fn = html4 + 'Y' + yy + '/M' + mm + '/' + f.lstrip()
-            fname = ("FN:%-33s" % f)
+            if f[-3:] == '.gz':
+                 
+                 ff = '/nfs/OGN/DIRdata/fd/Y' + yy + '/M' + mm + '/' + f.lstrip()
+                 os.system('gunzip '+ff)
+                 fn = html4 + 'Y' + yy + '/M' + mm + '/' + f[0:-3].lstrip()
+            else:
+                 ff=''
+                 fn = html4 + 'Y' + yy + '/M' + mm + '/' + f.lstrip()
+ 
+            fname = ("FN:%-33s %s" % (f, ff))
+            fname = ("FN:%-33s " % f)
             print(fn, '">MAP</a>', "<a>", fname, details,  "</a>")
     if nlines == 0:
         print("No flights found")
     print(html3)
+exit(0)

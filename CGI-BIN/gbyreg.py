@@ -8,6 +8,10 @@ import config
 from geopy.geocoders import Nominatim
 
 
+#
+# Get IGC file by registration
+#
+
 def scandir(dir, rpath, html4, curs, curs2):
     nlines = 0
     ld = os.listdir(dir)
@@ -51,29 +55,39 @@ def scandir(dir, rpath, html4, curs, curs2):
                 details = (" ==> Count(%4d) MDist(%5.1f) MAlt(%6.1f) Lat(%7.4f) Long(%7.4f) %s " % (cnt, dst, alt, lati, longi, addr))
             else:
                 details = " "
-            fn = html4 + rpath + '/' + f.lstrip()
-            fname = ("FN:%-33s" % f)
+            if f[-3:] == '.gz':
+                 
+                 ff = '/nfs/OGN/DIRdata/fd/' + rpath + '/' + f.lstrip()
+                 os.system('gunzip '+ff)
+                 fn = html4 + rpath + '/' + f[0:-3].lstrip()
+            else:
+                 ff=''
+                 fn = html4 + rpath + '/' + f.lstrip()
+
+            fname = ("FN:%-33s %s" % (f, ff))
+            fname = ("FN:%-33s " % f)
             print(fn, '">MAP</a>', "<a>", fname, details,  "</a>")
         elif (os.path.isdir(dir+'/'+f)):
             nlines += scandir(dir+'/'+f, rpath+'/'+f, html4, curs, curs2)
     return(nlines)
-
-
 #
-# Get IGC file by registration
+# Main code
 #
+
 setcmd1 = "set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';"
 setcmd2 = "set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';"
 rootdir = config.DBpath+"/fd"
 if config.MySQL:
+
     import MySQLdb                  # the SQL data base routines^M
     conn = MySQLdb.connect(host=config.DBhost, user=config.DBuser,
                            passwd=config.DBpasswd, db=config.DBname)
 else:
+
     import sqlite3
     conn = sqlite3.connect(config.DBpath+config.DBSQLite3)
 
-curs = conn.cursor()
+curs  = conn.cursor()
 curs2 = conn.cursor()
 
 if config.MySQL:
@@ -113,3 +127,4 @@ else:
     if nlines == 0:
         print("No flights found for:", rg)
     print(html3)
+exit(0)
