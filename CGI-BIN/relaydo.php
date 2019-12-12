@@ -15,12 +15,12 @@ $YY=date('y');
 if ($dd == $DD and $mm == $MM and $YY == $yy)
 	{
 	chdir("/nfs/OGN/DIRdata/");
-	$pgm ="../src/SARsrc/analysisrelay.py";
+	$pgm ="../src/SARsrc/SARanalysisrelay.py";
 	}
 else
 	{
 	chdir("/nfs/OGN/DIRdata/data/");
-	$pgm ="../../src/SARsrc/analysisrelay.py";
+	$pgm ="../../src/SARsrc/SARanalysisrelay.py";
 	}
 //echo getcwd();
 ob_start();

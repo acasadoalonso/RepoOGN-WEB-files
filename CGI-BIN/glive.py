@@ -13,7 +13,7 @@ cgitb.enable()
 # This script generates all the IGC files that are live now and present the list to the user
 #
 
-execfilename = config.PYsrc+"/processogn.py"
+execfilename = config.PYsrc+"/SARprocessogn.py"
 tempdir = config.DBpath+"/tmp/"
 datapath = config.DBpath
 
