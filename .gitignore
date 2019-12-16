@@ -5,3 +5,4 @@ CGI-BIN/config.py
 CGI-BIN/old/*
 calcelestial/
 __pycache__
+index.html
