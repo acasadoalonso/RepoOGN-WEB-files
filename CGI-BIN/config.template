@@ -1,11 +1,11 @@
-reposerver="repoogn.ddns.net"
+reposerver="yourserver.com"
 DBpath='/nfs/OGN/DIRdata/' 
-DBhost='ubuntu' 
+DBhost='localhost' 
 DBname='OGNDB' 
 DBSQLite3='SAROGN.db' 
-DBuser='ogn' 
-DBpasswd='ogn' 
-DBuserread='ognread' 
-DBpasswdread='ognread' 
+DBuser='you' 
+DBpasswd='you' 
+DBuserread='you' 
+DBpasswdread='you' 
 MySQL=True
 PYsrc='/nfs/OGN/src/SARsrc'
