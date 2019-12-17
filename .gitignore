@@ -3,6 +3,7 @@ DIR*
 .htaccess
 CGI-BIN/config.py
 CGI-BIN/old/*
+CGI-BIN/gitold/*
 calcelestial/
 __pycache__
 index.html
