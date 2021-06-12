@@ -90,7 +90,9 @@ else:
                 dst = reg[2]
                 if dst == None:
                     dst = 0.0
-                geolocator = Nominatim(timeout=20)
+                #geolocator = Nominatim(timeout=20)
+                geolocator = Nominatim(user_agent="Repoogn",timeout=20)
+
                 execmd = "select max(altitude) as maxa, latitude, longitude from OGNDATA where idflarm = '%s' and date = '%s' " % (id, dte)
                 curs2.execute(execmd)
                 reg = curs2.fetchone()

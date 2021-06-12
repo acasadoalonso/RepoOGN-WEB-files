@@ -3,3 +3,4 @@ DIR*
 .htaccess
 *.pyc
 config.py
+config.php
