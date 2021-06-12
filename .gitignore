@@ -2,6 +2,7 @@ apt*
 DIR*
 .htaccess
 CGI-BIN/config.py
+CGI-BIN/config.php
 CGI-BIN/old/*
 CGI-BIN/gitold/*
 calcelestial/
