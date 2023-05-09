@@ -3,7 +3,8 @@ include 'config.php';
 $dd = $_POST['dd'];
 $mm = $_POST['mm'];
 $yy = $_POST['yy'];
-if ($secretKey != '') {
+$hostname = gethostname(); 
+if ($secretKey != '' and $hostname != 'CasadoUbuntu') {
 
 	if(isset($_POST['g-recaptcha-response'])){
           $captcha=$_POST['g-recaptcha-response'];
