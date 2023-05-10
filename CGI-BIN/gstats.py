@@ -153,11 +153,17 @@ dbpath = config.DBpath
 #
 # get the stations info for the WIKI page
 #
-
+s_obj=""
+receivers="{}"
 s = urllib.request.urlopen('http://ogn.peanutpod.de/receivers.json')
 ss= s.read().decode('utf-8')
-s_obj = json.loads(ss)
-receivers=s_obj["receivers"]
+if ss[0] == '{':
+   s_obj = json.loads(ss)
+
+if "receivers" in s_obj:
+   receivers=s_obj["receivers"]
+else:
+   print ("no data from peanutpod ...")
 
 #
 # Get the information for the APRS servers
@@ -210,9 +216,12 @@ for row in cursD.fetchall():              # search all the rows
     desc = row[1]
     if (id == None or id == "NONE" ):
         continue
-
-    descri=getrecdesc(receivers,id)
-    country=getreccountry(receivers,id)
+    if len(receivers) > 2:
+       descri=getrecdesc(receivers,id)
+       country=getreccountry(receivers,id)
+    else:
+       descri=" "
+       country=" "
     aprsip=getaprsip(aprsclients,id)
     aprsserver=getaprsserver(aprsclients,id, aprsipaddrs)
     aprstconnect=getaprstconnect(aprsclients,id)
