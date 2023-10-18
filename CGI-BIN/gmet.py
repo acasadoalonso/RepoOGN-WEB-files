@@ -35,6 +35,7 @@ if www:
 ################
 
 url = ('https://aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&stationString=%s&hoursBeforeNow=25' % sta)
+url = ('https://aviationweather.gov/cgi-bin/data/dataserver.php?requestType=retrieve&dataSource=metars&stationString=%s&format=xml&hoursBeforeNow=1' % sta)
 f = urllib.request.urlopen(url)
 doc = parse(f)
 
@@ -81,6 +82,7 @@ f.close()
 ################
 
 url = ('https://aviationweather.gov/adds/dataserver_current/httpparam?dataSource=tafs&requestType=retrieve&format=xml&stationString=%s&hoursBeforeNow=25' % sta)
+url = ('https://aviationweather.gov/cgi-bin/data/dataserver.php?requestType=retrieve&dataSource=tafs&stationString=%s&hoursBeforeNow=1&format=xml' % sta)
 f = urllib.request.urlopen(url)
 root = parse(f)
 for data in root.findall('data'):
