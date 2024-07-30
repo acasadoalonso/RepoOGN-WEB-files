@@ -52,7 +52,7 @@ else:
     mm = dt[2:4]
     yy = dt[4:6]
     dir = rootdir+'/Y'+yy+'/M'+mm
-    if int(dd) > 0 and int(dd) < 32 and int(mm) > 0 and int(mm) < 13 and int(yy) > 14 and int(yy) < 23  and os.path.isdir(dir):
+    if int(dd) > 0 and int(dd) < 32 and int(mm) > 0 and int(mm) < 13 and int(yy) > 14 and int(yy) < 30  and os.path.isdir(dir):
         vd = ('Valid date: %s-%s-%s. </br>Select now the flight to display:' %
               (dd, mm, yy))
     else:
