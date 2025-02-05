@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import json
-import cgi
-import cgitb
+#import cgi
+#import cgitb
 import os
 from socket import gethostbyname, gethostname
 import urllib.request, urllib.error, urllib.parse
@@ -11,7 +11,8 @@ import sys
 import config
 import datetime
 from datetime import timedelta
-cgitb.enable()
+import ksta
+#cgitb.enable()
 # --------------------------------------#
 # -*- coding: UTF-8 -*-
 
@@ -81,7 +82,7 @@ def getaprsip(aprsclients, rg):
         aprs=aprsclients[i]
     
         for rec in aprs:
-           if rec["username"] == rg:
+           if rec["username"].upper()  == rg.upper():
               ip=rec["addr_rem"]
               p=ip.index(':')
               ip=ip[0:p]
@@ -94,7 +95,7 @@ def getaprsserver(aprsclients, rg, aprsservers):
         aprs=aprsclients[i]
     
         for rec in aprs:
-           if rec["username"] == rg:
+           if rec["username"].upper() == rg.upper():
               ip=rec["addr_loc"]
               p=ip.index(':')
               ip=ip[0:p]
@@ -110,7 +111,7 @@ def getaprstconnect(aprsclients, rg):
         aprs=aprsclients[i]
     
         for rec in aprs:
-           if rec["username"] == rg:
+           if rec["username"].upper() == rg.upper():
               tc=rec["t_connect"]
               tt=datetime.datetime.fromtimestamp(tc)
               return (tt)
@@ -122,7 +123,7 @@ def getaprsslr(aprsclients, rg):
         aprs=aprsclients[i]
     
         for rec in aprs:
-           if rec["username"] == rg:
+           if rec["username"].upper() == rg.upper():
               slr=rec["since_last_read"]
               td=timedelta(seconds=slr)
               return (td)
@@ -133,9 +134,18 @@ def getaprsrec(aprsclients, rg):
         aprs=aprsclients[i]
     
         for rec in aprs:
-           if rec["username"] == rg:
+           if rec["username"].upper() == rg.upper():
               return (rec)
         i += 1
+def upddescri(key, curs):
+    descri=''
+    if key in ksta.ksta:
+       gid = ksta.ksta[key]   	# report the station name
+       updcmd = "update RECEIVERS SET descri='"+gid+"' where idrec='"+key+"';"
+       print ("Desc:", key, gid, updcmd)
+       curs.execute(updcmd)
+       descri=gid
+    return (descri)
 ##############################################################################################################
 #
 # Main program
@@ -169,6 +179,7 @@ else:
 # Get the information for the APRS servers
 #
 i=1					# the names of the servers go from 1 to 5 (so far)
+upd = False
 aprsclients=[]
 hostname=gethostname()
 ipaddr=gethostbyname(hostname)
@@ -184,8 +195,8 @@ while i < 6:
       clients=s_obj["clients"]
       aprsclients.append(clients)
       i += 1
-#print (aprsipaddrs)
-#print (aprsclients)
+#print ("APRS IP addrs:",aprsipaddrs)
+#print ("APRS IP clients:",aprsclients)
 s = json.dumps(s_obj, indent=4)
 if rg != "ALL":
    print (getaprsrec(aprsclients,rg))
@@ -201,11 +212,16 @@ filename = dbpath+config.DBSQLite3        # open th DB in read only mode
 fd = os.open(filename, os.O_RDONLY)
 conn = sqlite3.connect('/dev/fd/%d' % fd)
 cursD = conn.cursor()
+cursU = conn.cursor()
 vd = ('Valid station: %-s:' % rg)         # prepate the literal to show
 print((html1 % vd))                       # tell that
 print(html2)                              # cursor for the ogndata table
 print("<a> ID          Description                                                         Country   IP addr      Server        Connected           Last heartbeat </a>")
-if rg == "ALL":
+if rg == "UPD":
+    # get all the receivers
+    cursD.execute('select idrec, descri from RECEIVERS order by idrec;')
+    upd = True
+elif rg == "ALL":
     # get all the receivers
     cursD.execute('select idrec, descri from RECEIVERS order by idrec;')
 else:
@@ -220,16 +236,21 @@ for row in cursD.fetchall():              # search all the rows
        descri=getrecdesc(receivers,id)
        country=getreccountry(receivers,id)
     else:
-       descri=" "
+       if upd:
+          descri=upddescri(id, cursU)
+       else:
+          descri=" "
        country=" "
-    aprsip=getaprsip(aprsclients,id)
-    aprsserver=getaprsserver(aprsclients,id, aprsipaddrs)
+    aprsip      =getaprsip(aprsclients,id)
+    aprsserver  =getaprsserver(aprsclients,id, aprsipaddrs)
     aprstconnect=getaprstconnect(aprsclients,id)
-    aprsslr=getaprsslr(aprsclients,id)
+    aprsslr     =getaprsslr(aprsclients,id)
     if desc != None and descri != None:
         descri=descri.encode('utf-8').decode('utf-8')
         print("<a>", "%-9s : %-30s %-36s %-6s %-15s %-12s "% (id, desc, descri, country, aprsip, aprsserver), aprstconnect, aprsslr, "</a>")
 print(html3)
+conn.commit()
 cursD.close()
+cursU.close()
 os.close(fd)
 
