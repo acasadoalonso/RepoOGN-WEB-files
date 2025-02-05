@@ -183,7 +183,7 @@ upd = False
 aprsclients=[]
 hostname=gethostname()
 ipaddr=gethostbyname(hostname)
-aprsipaddrs={"192.168.1.14":"glidern4"}
+aprsipaddrs={"172.31.9.13":"glidern4"}
 while i < 6:
       aprsname='glidern'+str(i)+'.glidernet.org'
       ipaddr=gethostbyname(aprsname)
@@ -247,7 +247,7 @@ for row in cursD.fetchall():              # search all the rows
     aprsslr     =getaprsslr(aprsclients,id)
     if desc != None and descri != None:
         descri=descri.encode('utf-8').decode('utf-8')
-        print("<a>", "%-9s : %-30s %-36s %-6s %-15s %-12s "% (id, desc, descri, country, aprsip, aprsserver), aprstconnect, aprsslr, "</a>")
+        print("<a>", "%-9s : %-30s %-36s %-6s %-15s  %-12s "% (id, desc, descri, country, aprsip, aprsserver), aprstconnect, "     ", aprsslr, "</a>")
 print(html3)
 conn.commit()
 cursD.close()
