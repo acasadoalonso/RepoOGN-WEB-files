@@ -3,7 +3,7 @@ $station = $_POST['station'];
 
 $cwd =getcwd();
 $rc=0;
-echo 'station='.$station.'<br>';
+echo 'Station='.$station.'<br>';
 //echo getcwd();
 ob_start();
 
