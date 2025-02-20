@@ -245,7 +245,7 @@ for row in cursD.fetchall():              # search all the rows
     aprsserver  =getaprsserver(aprsclients,id, aprsipaddrs)
     aprstconnect=getaprstconnect(aprsclients,id)
     aprsslr     =getaprsslr(aprsclients,id)
-    if desc != None and descri != None:
+    if desc != 'Noreg' and descri != None:
         descri=descri.encode('utf-8').decode('utf-8')
         print("<a>", "%-9s : %-30s %-36s %-6s %-15s  %-12s "% (id, desc, descri, country, aprsip, aprsserver), aprstconnect, "     ", aprsslr, "</a>")
 print(html3)
