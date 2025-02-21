@@ -36,13 +36,15 @@ if www:
     print((html1 % sta))
 if www:
     print(html2)
+maxrecords=50
 
 ################
 date = datetime.datetime.now()
 dte = date.strftime("%y%m%d")       # today's date
-fd =open("/nfs/OGN/DIRdata/DATA"+dte+".log", 'r')
-
-for line in fd.readlines():
+filename="/nfs/OGN/DIRdata/DATA"+dte+".log"
+#
+for line in reversed(list(open(filename))):
+    #print(line.rstrip())
     #print ("LLL:", line)
     parseraprs(line, msg)
     if msg['source'] != 'WTX':
@@ -52,6 +54,9 @@ for line in fd.readlines():
        if station != sta:
           continue
     #print ("MMM", msg)
+    windspeed=msg['windspeed']
+    if windspeed == ' ':
+       continue
     tempf=msg['temp']
     humidity=msg['humidity']
     rain=msg['rain']
@@ -68,8 +73,10 @@ for line in fd.readlines():
     if rain != ' ':
        message +=  " Rain: "+msg['rain']+"%"
     print ("Station:", msg['station'], "Time (UTC):", msg['otime'], "Wind (dir/spd/burst):", msg['windspeed'], message)
+    maxrecords -= 1
+    if maxrecords == 0:
+       break
 
-fd.close()
 ################
 if www:
     print(html3)
