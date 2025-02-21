@@ -51,7 +51,7 @@ for line in reversed(list(open(filename))):
        continue
     station = msg['station']
     if sta != 'ALL' and sta != 'all':
-       if station != sta:
+       if station.upper() != sta.upper():
           continue
     #print ("MMM", msg)
     windspeed=msg['windspeed']
