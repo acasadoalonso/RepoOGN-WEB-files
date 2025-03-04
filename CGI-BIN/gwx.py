@@ -42,6 +42,7 @@ maxrecords=50
 date = datetime.datetime.now()
 dte = date.strftime("%y%m%d")       # today's date
 filename="/nfs/OGN/DIRdata/DATA"+dte+".log"
+filename="/nfs/OGN/DIRdata/DATA.active"
 #
 for line in reversed(list(open(filename))):
     #print(line.rstrip())
@@ -71,7 +72,7 @@ for line in reversed(list(open(filename))):
     if humidity != ' ':
        message +=  " Humidity: "+msg['humidity']+"%"
     if rain != ' ':
-       message +=  " Rain: "+msg['rain']+"%"
+       message +=  " Rain: "+msg['rain']+"mm/h"
     print ("Station:", msg['station'], "Time (UTC):", msg['otime'], "Wind (dir/spd/burst):", msg['windspeed'], message)
     maxrecords -= 1
     if maxrecords == 0:
