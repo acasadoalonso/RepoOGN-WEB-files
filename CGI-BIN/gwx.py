@@ -81,7 +81,7 @@ for line in reversed(list(open(filename))):
        message +=  " Humidity: "+msg['humidity']+"%"
     if rain != ' ':
        message +=  " Rain: "+msg['rain']+"mm/h"
-    print ("Station:", msg['station'], "Time (UTC):", msg['otime'], "Wind (dir/spd/burst):", msg['windspeed'], message)
+    print ("Station:", msg['station'], ksta[station.upper()], "Time (UTC):", msg['otime'], "Wind (dir/spd/burst):", msg['windspeed'], message)
     maxrecords -= 1
     if maxrecords == 0:
        break
