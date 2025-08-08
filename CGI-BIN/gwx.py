@@ -17,7 +17,7 @@ from parserfuncs import parseraprs
 import fileinput
 msg={}
 stations=[]				    # list of shown stations
-html1 = """<HTML><TITLE>Get the meteo information</TITLE> <IMG src="../gif/ogn-logo-150x150.png" border=1 alt=[image]><H1>The meteo observations for the selected ICAO station (%s) are: </H1> """
+html1 = """<HTML><TITLE>Get the meteo information</TITLE> <IMG src="../gif/ogn-logo-150x150.png" border=1 alt=[image]><H1>The meteo observations for the selected station (%s) are: </H1> """
 html2 = """<center><table><tr><td><pre>"""
 html3 = """</pre></td></tr></table></center></html>"""
 
