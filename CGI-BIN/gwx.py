@@ -52,12 +52,12 @@ for line in reversed(list(open(filename))):
        continue
     station = msg['station']
 
-    print ("SSS", sta, stations)          
+    print ("SSS", station, stations)          
     if sta == 'ALL' :
-       if sta in stations:
+       if station in stations:
           continue
        else: 
-          stations.append(sta)
+          stations.append(station)
     else:
        if station.upper() != sta.upper():
           continue
