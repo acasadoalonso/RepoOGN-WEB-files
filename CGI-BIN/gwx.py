@@ -82,9 +82,9 @@ for line in reversed(list(open(filename))):
     if rain != ' ':
        message +=  " Rain: "+msg['rain']+"mm/h"
     if station.upper() in ksta.ksta:
-       print ("Station:", msg['station'], ksta.ksta[station.upper()], "Time (UTC):", msg['otime'], "Wind (dir/spd/burst):", msg['windspeed'], message)
+       print ("Station:", msg['station'], ":::", ksta.ksta[station.upper()], " ::: Time (UTC):", msg['otime'], "Wind (dir/spd/burst):", msg['windspeed'], message)
     else:
-       print ("Station:", msg['station'],                             "Time (UTC):", msg['otime'], "Wind (dir/spd/burst):", msg['windspeed'], message)
+       print ("Station:", msg['station'], "NOREG",                           " ::: Time (UTC):", msg['otime'], "Wind (dir/spd/burst):", msg['windspeed'], message)
     maxrecords -= 1
     if maxrecords == 0:
        break
