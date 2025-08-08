@@ -9,14 +9,14 @@ import os
 import sys
 #import cgitb
 
-
+import ksta
 import sys
 import datetime
 
 from parserfuncs import parseraprs
 import fileinput
 msg={}
-
+stations=[]				    # list of shown stations
 html1 = """<HTML><TITLE>Get the meteo information</TITLE> <IMG src="../gif/ogn-logo-150x150.png" border=1 alt=[image]><H1>The meteo observations for the selected ICAO station (%s) are: </H1> """
 html2 = """<center><table><tr><td><pre>"""
 html3 = """</pre></td></tr></table></center></html>"""
@@ -51,9 +51,17 @@ for line in reversed(list(open(filename))):
     if msg['source'] != 'WTX':
        continue
     station = msg['station']
+
     if sta != 'ALL' and sta != 'all':
        if station.upper() != sta.upper():
           continue
+    else:
+       if sta in stations:
+          continue
+       else 
+          stations.append(sta)
+          print ("SSS", sta, stations)          
+       
     #print ("MMM", msg)
     windspeed=msg['windspeed']
     if windspeed == ' ':
