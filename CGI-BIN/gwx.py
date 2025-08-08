@@ -58,7 +58,7 @@ for line in reversed(list(open(filename))):
     else:
        if sta in stations:
           continue
-       else 
+       else: 
           stations.append(sta)
           print ("SSS", sta, stations)          
        
