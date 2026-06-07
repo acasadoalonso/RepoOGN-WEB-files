@@ -78,7 +78,7 @@ for line in reversed(list(open(filename))):
     if tempc != 0.0:
        message += " Temp: %.2fºC"%tempc
     if humidity != ' ':
-       message +=  " Humidity: "+msg['humidity']+"%"
+       message +=  " Humidity: "+str(msg['humidity'])+"%"
     if rain != ' ':
        message +=  " Rain: "+msg['rain']+"mm/h"
     if station.upper() in ksta.ksta:
